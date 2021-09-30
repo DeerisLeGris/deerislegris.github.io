@@ -4,9 +4,28 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql
+} from "@apollo/client";
+import { ChakraProvider } from "@chakra-ui/react"
+
+const client = new ApolloClient({
+  uri: 'https://scritch.es/graphql',
+  cache: new InMemoryCache()
+});
+
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
