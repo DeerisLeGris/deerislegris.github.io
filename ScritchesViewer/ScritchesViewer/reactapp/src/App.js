@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { Flex } from "@chakra-ui/react";
+import {
+  useQuery,
+  gql
+} from "@apollo/client";
+
+import Navbar from "./Components/Navbar";
+import Body from "./Components/Body";
+
+const GET_FURSUITS = gql`query FursuitsTest($name: String, $maker: ID, $limit: Int!, $offset: Int!) {
+  fursuits(name: $name, maker: $maker, limit: $limit, offset: $offset) {
+    name
+    creationYear
+    avatar
+  }
+}`;
 
 function App() {
+  const { loading, error, data } = useQuery(GET_FURSUITS, { variables: { name: "Fuzzer", limit: 12, maker: "", offset: 0 } });
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Flex height="100vh" flexDirection="row" alignItems="stretch">
+      <Navbar/>
+      <Body/>
+    </Flex>
   );
 }
 
