@@ -9,7 +9,7 @@ function BodyNavbar({fursuitsData, fursuitsDataLoading, onCancel, showMode, curr
     return(
         <Flex flexDirection="column" overflow="auto" gridGap="10px">
             {
-            showMode === "search" && fursuitsData && fursuitsData.fursuits ? fursuitsData.fursuits.map((fursuit) => { return(<FursuitProfile key={fursuit.id} name={fursuit.name} image={fursuit.avatar} maker={fursuit.makers[0].name}/>) }) : null
+            showMode === "search" && fursuitsData && fursuitsData.fursuits ? fursuitsData.fursuits.map((fursuit) => { return(<FursuitProfile key={fursuit.id} name={fursuit.name} image={fursuit.avatar} maker={fursuit.makers[0] != null ? fursuit.makers[0].name : ""}/>) }) : null
 
             || fursuitsDataLoading && (<><Skeleton height="150px"/><Skeleton height="150px"/><Skeleton height="150px"/></>)
             }
