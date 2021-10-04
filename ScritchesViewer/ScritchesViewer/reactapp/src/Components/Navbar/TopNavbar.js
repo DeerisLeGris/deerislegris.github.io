@@ -11,12 +11,12 @@ function TopNavbar({onSearch, onCancel, showMode, currentSelection}) {
     };
 
     return(
-        <Flex flexGrow={0} flexShrink={0} flexBasis="100px" backgroundColor="red.400" flexDirection="column" alignItems="stretch" justifyContent="center">
+        <Flex flexShrink={0} flexDirection="column" alignItems="stretch" justifyContent="center">
             {showMode === "search" && (
             <InputGroup>
                 <Input placeholder="Search fursuit..." onChange={event => setSearchValue(event.target.value)} onKeyDown={onInput}/>
-                <InputRightElement>
-                    <Button onClick={() => onSearch(searchValue)}><SearchIcon color="gray.300"/></Button>
+                <InputRightElement width="4rem">
+                    <Button h="1.75rem" size="sm" onClick={() => onSearch(searchValue)}><SearchIcon color="gray.300"/></Button>
                 </InputRightElement>
             </InputGroup>
             )}
