@@ -8,6 +8,7 @@ import TopNavbar from "./Navbar/TopNavbar";
 const GET_FURSUITS = gql`query FursuitsTest($name: String, $maker: ID, $limit: Int!, $offset: Int!) {
     fursuits(name: $name, maker: $maker, limit: $limit, offset: $offset) {
       id
+      slug
       name
       makers {
         name
@@ -16,10 +17,33 @@ const GET_FURSUITS = gql`query FursuitsTest($name: String, $maker: ID, $limit: I
     }
   }`;
 
+const GET_IMAGES = gql`query FursuitMedia($fursuitId: ID!, $limit: Int!, $offset: Int!) {
+    fursuitMedia(fursuitId: $fursuitId, limit: $limit, offset: $offset) {
+      id
+      thumbnail
+    }
+  }`;
+
 function Navbar({onImageSelected}) {
     const [currentSearchValue, setCurrentSearchValue] = useState("");
     const [currentShowMode, setCurrentShowMode] = useState("search");
+    const [selectedFursuit, setSelectedFursuit] = useState([]);
+
     const [getFursuits, { loading, error, data }] = useLazyQuery(GET_FURSUITS);
+    const [getImages, { loading: loadingImages , error: errorImages, data: dataImages }] = useLazyQuery(GET_IMAGES);
+
+    const getImagesFromId = (id, selectedFursuit) => {
+        setSelectedFursuit(selectedFursuit);
+
+        if(id != "") {
+            setCurrentShowMode("images");
+            getImages({ variables: { fursuitId: id, limit: 24, offset: 0 } });
+        }
+    };
+
+    const goBackToSearch = () => {
+        setCurrentShowMode("search");
+    };
 
     useEffect(() => {
         //console.log(currentSearchValue);
@@ -31,9 +55,9 @@ function Navbar({onImageSelected}) {
 
     return(
         <Flex flexGrow={0} flexShrink={0} flexBasis="500px" flexDirection="column" padding="20px">
-            <TopNavbar showMode={currentShowMode} onSearch={setCurrentSearchValue}/>
+            <TopNavbar showMode={currentShowMode} onSearch={setCurrentSearchValue} selectedFursuit={selectedFursuit} onCancel={goBackToSearch}/>
             <Divider marginTop="20px" marginBottom="20px"/>
-            <BodyNavbar showMode={currentShowMode} fursuitsData={data} fursuitsDataLoading={loading}/>
+            <BodyNavbar showMode={currentShowMode} fursuitsData={data} fursuitsDataLoading={loading} imagesData={dataImages} imagesDataLoading={loadingImages} onFursuitSelected={getImagesFromId}/>
         </Flex>
     )
 }

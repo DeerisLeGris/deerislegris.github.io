@@ -15,9 +15,9 @@ const Maker = styled.h2`
     font-style: italic;
 `;
 
-function FursuitProfile({name, image, maker}) {
+function FursuitProfile({name, image, maker, onClick}) {
     return(
-        <Flex flexGrow={0} flexShrink={0} flexBasis="150px" backgroundColor="red.400" flexDirection="row" alignItems="center" padding="10px" borderRadius="15px" backgroundColor="lightgray">
+        <Flex flexGrow={0} flexShrink={0} flexBasis="150px" backgroundColor="red.400" flexDirection="row" alignItems="center" padding="10px" borderRadius="15px" backgroundColor="lightgray" onClick={onClick} cursor="pointer">
             <Image src={image} height="100" borderRadius="15px"/>
             <Flex marginLeft="10px" flexDirection="column">
                 <FursuitName>{name}</FursuitName>
