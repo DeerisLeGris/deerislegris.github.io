@@ -54,10 +54,10 @@ function Navbar({onImageSelected}) {
     }, [currentSearchValue]);
 
     return(
-        <Flex flexGrow={0} flexShrink={0} flexBasis="500px" flexDirection="column" padding="20px">
+        <Flex flexGrow={0} flexShrink={0} flexBasis="500px" flexDirection="column" padding="20px" boxShadow="0px 0px 15px 5px #000000" zIndex="1">
             <TopNavbar showMode={currentShowMode} onSearch={setCurrentSearchValue} selectedFursuit={selectedFursuit} onCancel={goBackToSearch}/>
             <Divider marginTop="20px" marginBottom="20px"/>
-            <BodyNavbar showMode={currentShowMode} fursuitsData={data} fursuitsDataLoading={loading} imagesData={dataImages} imagesDataLoading={loadingImages} onFursuitSelected={getImagesFromId}/>
+            <BodyNavbar showMode={currentShowMode} fursuitsData={data} fursuitsDataLoading={loading} imagesData={dataImages} imagesDataLoading={loadingImages} onFursuitSelected={getImagesFromId} onImageSelected={onImageSelected}/>
         </Flex>
     )
 }

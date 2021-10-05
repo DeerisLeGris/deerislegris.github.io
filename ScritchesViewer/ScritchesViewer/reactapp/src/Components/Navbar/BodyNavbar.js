@@ -4,7 +4,7 @@ import { Flex, Skeleton, Image } from "@chakra-ui/react";
 import FursuitProfile from "./FursuitProfile";
 
 
-function BodyNavbar({fursuitsData, fursuitsDataLoading, onFursuitSelected, imagesData, imagesDataLoading, onCancel, showMode, currentSelection}) {
+function BodyNavbar({fursuitsData, fursuitsDataLoading, onFursuitSelected, imagesData, imagesDataLoading, onImageSelected, showMode}) {
 
     return(
         <Flex flexDirection="column" overflow="auto" gridGap="10px">
@@ -15,7 +15,7 @@ function BodyNavbar({fursuitsData, fursuitsDataLoading, onFursuitSelected, image
             }
 
             {
-                showMode === "images" && imagesData && imagesData.fursuitMedia ? imagesData.fursuitMedia.map((image) => { return(<Image key={image.id} src={image.thumbnail}/>) }) : null
+                showMode === "images" && imagesData && imagesData.fursuitMedia ? imagesData.fursuitMedia.map((image) => { return(<Image key={image.id} src={image.thumbnail} onClick={() => onImageSelected(image.id)} cursor="pointer"/>) }) : null
 
                 || showMode === "images" && imagesDataLoading && (<><Skeleton height="150px"/><Skeleton height="150px"/><Skeleton height="150px"/></>)
             }
