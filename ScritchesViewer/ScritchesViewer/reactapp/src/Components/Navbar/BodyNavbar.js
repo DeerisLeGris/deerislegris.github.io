@@ -5,8 +5,8 @@ import FursuitProfile from "./FursuitProfile";
 
 //Component with generated skeletons (between 1 and 11)
 const Skeletons = () => {
-    return Array.from(Array(1 + Math.floor(Math.random() * 10)).keys()).map(() => (
-        <Skeleton borderRadius="15px" height="150px"/>
+    return Array.from(Array(1 + Math.floor(Math.random() * 10)).keys()).map((i) => (
+        <Skeleton key={i} borderRadius="15px" height="150px"/>
     ));
 }
 
