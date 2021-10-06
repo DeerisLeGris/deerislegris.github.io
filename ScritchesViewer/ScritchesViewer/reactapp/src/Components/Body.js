@@ -1,6 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { useLazyQuery, gql } from "@apollo/client";
 import React, { useEffect } from 'react';
+import { useParams } from "react-router-dom";
 
 const GET_IMAGE = gql`query Medium($id: ID!, $tagging: Boolean) {
     medium(id: $id, tagging: $tagging) {
@@ -10,16 +11,15 @@ const GET_IMAGE = gql`query Medium($id: ID!, $tagging: Boolean) {
     }
   }`;
 
-function Body({id}) {
+function Body() {
+    const {idimage} = useParams();
     const [getImage, { loading, error, data }] = useLazyQuery(GET_IMAGE);
 
     useEffect(() => {
-        //console.log(currentSearchValue);
-    
-        if(id !== "") {
-            getImage({ variables: { id: id } });
+        if(idimage) {
+            getImage({ variables: { id: idimage } });
         }
-    }, [id]);
+    }, [idimage]);
 
     if(data && data.medium) {
         return(<Flex flexGrow={1} backgroundImage={"url('" + data.medium.picture + "')"} backgroundSize="contain" backgroundPosition="center" backgroundRepeat="no-repeat" backgroundColor="gray.600"/>);

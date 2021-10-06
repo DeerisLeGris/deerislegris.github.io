@@ -29,7 +29,7 @@ function BodyNavbar({fursuitsData, fursuitsDataLoading, onFursuitSelected, image
                     {
                         fursuitsData && fursuitsData.fursuits && fursuitsData.fursuits.map((fursuit) => (
                             <FursuitProfile key={fursuit.id} 
-                                            onClick={() => onFursuitSelected(fursuit.slug, fursuit)} 
+                                            onClick={() => onFursuitSelected(fursuit.slug)} 
                                             name={fursuit.name} 
                                             image={fursuit.avatar} 
                                             maker={fursuit.makers[0] != null ? fursuit.makers[0].name : ""}

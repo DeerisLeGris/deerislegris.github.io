@@ -42,18 +42,18 @@ function TopNavbar({onSearch, onCancel, showMode, selectedFursuit}) {
             }
 
             {
-                showMode === "images" && (
+                showMode === "images" && selectedFursuit && selectedFursuit.fursuit && (
                     <Flex flexGrow={0} 
                         flexShrink={0} 
                         flexDirection="row" 
                         alignItems="center" 
                         borderRadius="15px">
 
-                        <Image src={selectedFursuit.avatar} height="50" borderRadius="15px"/>
+                        <Image src={selectedFursuit.fursuit.avatar} height="50" borderRadius="15px"/>
 
                         <Flex marginLeft="10px" flexDirection="column" flexGrow={1}>
-                            <Text fontWeight="bold">{selectedFursuit.name}</Text>
-                            <Text fontStyle="italic">{selectedFursuit.makers[0] != null ? selectedFursuit.makers[0].name : ""}</Text>
+                            <Text fontWeight="bold">{selectedFursuit.fursuit.name}</Text>
+                            <Text fontStyle="italic">{selectedFursuit.fursuit.makers[0] != null ? selectedFursuit.fursuit.makers[0].name : ""}</Text>
                         </Flex>
 
                         <CloseButton onClick={handleCancelButton}/>

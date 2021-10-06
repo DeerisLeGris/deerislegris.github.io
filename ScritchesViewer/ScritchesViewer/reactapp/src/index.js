@@ -8,9 +8,12 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  useQuery,
-  gql
 } from "@apollo/client";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react"
 
 const client = new ApolloClient({
@@ -22,7 +25,13 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <ChakraProvider>
-        <App />
+        <Router>
+          <Switch>
+            <Route path="/:idfursuit?/:idimage?">
+              <App/>
+            </Route>
+          </Switch>
+        </Router>
       </ChakraProvider>
     </ApolloProvider>
   </React.StrictMode>,
