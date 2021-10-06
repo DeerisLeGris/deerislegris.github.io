@@ -18,7 +18,7 @@ function Body() {
         skip: !idimage 
     });
 
-    if(loading)
+    if(loading) {
         return(<Flex flexGrow={1} 
             backgroundColor="gray.600" 
             alignItems="center" 
@@ -27,7 +27,8 @@ function Body() {
             <Spinner size="xl" color="whitesmoke"/>
 
         </Flex>);
-
+    }
+    
     if(data && data.medium) {
         return(<Flex flexGrow={1} 
                      backgroundImage={"url('" + data.medium.picture + "')"} 

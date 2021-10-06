@@ -1,6 +1,6 @@
 import { Flex, Divider } from "@chakra-ui/react";
 import React, { useState, useEffect, useCallback } from 'react';
-import { useLazyQuery, gql } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 import { useParams, useHistory } from "react-router-dom";
 
 
@@ -44,9 +44,20 @@ function Navbar() {
     const {idfursuit} = useParams();
     const history = useHistory();
 
-    const [getFursuits, { loading, error, data }] = useLazyQuery(GET_FURSUITS);
-    const [getSelectedFursuit, { data: selectedFursuitData }] = useLazyQuery(GET_SELECTEDFURSUIT);
-    const [getImages, { loading: loadingImages , error: errorImages, data: dataImages }] = useLazyQuery(GET_IMAGES);
+    const { loading, error, data } = useQuery(GET_FURSUITS, { 
+      variables: { name: currentSearchValue, limit: 12, maker: "", offset: 0 },
+      skip: !currentSearchValue 
+    });
+
+    const { data: selectedFursuitData } = useQuery(GET_SELECTEDFURSUIT, { 
+      variables: { id: idfursuit }, 
+      skip: !idfursuit 
+    });
+
+    const { loading: loadingImages , error: errorImages, data: dataImages } = useQuery(GET_IMAGES, { 
+      variables: { fursuitId: idfursuit, limit: 24, offset: 0 }, 
+      skip: !idfursuit 
+    });
 
     const getImagesFromId = useCallback((id) => {
         if(id)
@@ -63,16 +74,8 @@ function Navbar() {
     }, []);
 
     useEffect(() => {
-        if(currentSearchValue) {
-            getFursuits({ variables: { name: currentSearchValue, limit: 12, maker: "", offset: 0 } });
-        }
-    }, [currentSearchValue]);
-
-    useEffect(() => {
       if(idfursuit) {
         setCurrentShowMode("images");
-        getSelectedFursuit({ variables: { id: idfursuit } });
-        getImages({ variables: { fursuitId: idfursuit, limit: 24, offset: 0 } });
       }
     }, [idfursuit]);
 
