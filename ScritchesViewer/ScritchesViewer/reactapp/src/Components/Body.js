@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, Spinner } from "@chakra-ui/react";
 import { useQuery, useLazyQuery, gql } from "@apollo/client";
 import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
@@ -17,6 +17,16 @@ function Body() {
         variables: { id: idimage }, 
         skip: !idimage 
     });
+
+    if(loading)
+        return(<Flex flexGrow={1} 
+            backgroundColor="gray.600" 
+            alignItems="center" 
+            justifyContent="center">
+
+            <Spinner size="xl" color="whitesmoke"/>
+
+        </Flex>);
 
     if(data && data.medium) {
         return(<Flex flexGrow={1} 
