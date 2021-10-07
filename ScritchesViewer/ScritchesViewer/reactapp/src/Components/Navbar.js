@@ -1,4 +1,4 @@
-import { Flex, Divider } from "@chakra-ui/react";
+import { Flex, Divider, Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerCloseButton, DrawerHeader } from "@chakra-ui/react";
 import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery, gql } from "@apollo/client";
 import { useParams, useHistory } from "react-router-dom";
@@ -37,7 +37,7 @@ const GET_IMAGES = gql`query FursuitMedia($fursuitId: ID!, $limit: Int!, $offset
     }
   }`;
 
-function Navbar() {
+function Navbar({isNavbarOpen, setNavbarOpen, viewMode}) {
     const [currentSearchValue, setCurrentSearchValue] = useState("");
     const [currentShowMode, setCurrentShowMode] = useState("search");
 
@@ -65,9 +65,15 @@ function Navbar() {
     }, []);
 
     const getImageFromId = useCallback((id) => {
-      if(id)
+      if(id) {
         history.push("/" + idfursuit + "/" + id);
-    }, [idfursuit]);
+
+        if(viewMode === "mobile") {
+          setNavbarOpen();
+        }
+      }
+        
+    }, [idfursuit, viewMode, setNavbarOpen]);
 
     const goBackToSearch = useCallback(() => {
         setCurrentShowMode("search");
@@ -78,6 +84,40 @@ function Navbar() {
         setCurrentShowMode("images");
       }
     }, [idfursuit]);
+
+    if(viewMode === "mobile") {
+      return(
+        <Drawer isOpen={isNavbarOpen}
+                placement="left"
+                onClose={() => setNavbarOpen()}
+                size="full" >
+          
+          <DrawerOverlay/>
+          <DrawerContent>
+            <DrawerCloseButton/>
+            <DrawerHeader borderBottomWidth="1px">Scritch.es viewer</DrawerHeader>
+
+            <DrawerBody paddingTop="20px">
+              <TopNavbar showMode={currentShowMode} 
+                          onSearch={setCurrentSearchValue} 
+                          selectedFursuit={selectedFursuitData} 
+                          onCancel={goBackToSearch}/>
+
+              <Divider marginTop="20px" marginBottom="20px"/>
+
+              <BodyNavbar showMode={currentShowMode} 
+                          fursuitsData={data} 
+                          fursuitsDataLoading={loading} 
+                          imagesData={dataImages} 
+                          imagesDataLoading={loadingImages} 
+                          onFursuitSelected={getImagesFromId} 
+                          onImageSelected={getImageFromId}/>
+            </DrawerBody>
+          </DrawerContent>
+
+        </Drawer>
+      );
+    }
 
     return(
         <Flex flexGrow={0} 
