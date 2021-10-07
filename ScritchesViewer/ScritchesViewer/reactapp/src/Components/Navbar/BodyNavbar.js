@@ -49,6 +49,9 @@ function BodyNavbar({fursuitsData, fursuitsDataLoading, onFursuitSelected, image
                                     src={image.thumbnail} 
                                     onClick={() => onImageSelected(image.id)} 
                                     cursor="pointer"
+                                    width="100%"
+                                    maxHeight="500px"
+                                    objectFit="cover"
                             />
                         ))
                     }
