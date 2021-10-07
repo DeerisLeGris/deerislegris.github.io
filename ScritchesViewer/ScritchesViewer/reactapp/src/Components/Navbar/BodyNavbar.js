@@ -42,7 +42,7 @@ function BodyNavbar({fursuitsData, fursuitsDataLoading, onFursuitSelected, image
 
         case "images":
             return(
-                <Flex flexDirection="column" overflow="auto" gridGap="10px">
+                <Flex flexDirection="column" overflow="auto" gridGap="10px" alignItems="center">
                     {
                         imagesData && imagesData.fursuitMedia && imagesData.fursuitMedia.map((image) => (
                             <Image  key={image.id} 

@@ -12,11 +12,7 @@ const GET_IMAGE = gql`query Medium($id: ID!, $tagging: Boolean) {
     }
   }`;
 
-const MainView = ({viewMode, setNavbarOpen, children}) => {
-
-    const updateNavbar = useCallback(() => setNavbarOpen(), [setNavbarOpen]);
-
-    return(
+const MainView = ({viewMode, setNavbarOpen, children}) => (
         <Flex flexGrow={1} 
                backgroundColor="gray.600" 
                flexDirection="column"
@@ -30,7 +26,7 @@ const MainView = ({viewMode, setNavbarOpen, children}) => {
                           justifyContent="flex-start"
                           padding="20px">
                         
-                        <Button size="lg" onClick={updateNavbar}>
+                        <Button size="lg" onClick={setNavbarOpen}>
                             <SearchIcon color="gray.500"/>
                         </Button>
                     </Flex>
@@ -39,8 +35,7 @@ const MainView = ({viewMode, setNavbarOpen, children}) => {
 
             {children}
         </Flex>
-    )
-};
+);
 
 function Body({setNavbarOpen, viewMode}) {
     const {idimage} = useParams();
